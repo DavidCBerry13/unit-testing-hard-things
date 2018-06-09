@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ReadingCsvFile.Testable": {
+      "commandName": "Project",
+      "commandLineArgs": "stock-data.csv archive"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AddLocationExample": {
+      "commandName": "Project",
+      "commandLineArgs": "-n \"Field Museum\" -a \"1400 S Lakeshore\" -c \"Chicago\" -s \"IL\""
+    }
+  }
+}
