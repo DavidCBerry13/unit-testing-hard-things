@@ -7,6 +7,20 @@ namespace ScheduleAppointment
     public class AppointmentServicePartialMock : BaseService
     {
 
+        public AppointmentServicePartialMock()
+            : this(new AppointmentDao() )
+        {
+
+        }
+
+
+        public AppointmentServicePartialMock(IAppointmentDao dao)
+        {
+            _appointmentDao = dao;
+        }
+
+        private IAppointmentDao _appointmentDao;
+
 
         public Appointment CreateAppointment(AppointmentRequest request)
         {
@@ -20,7 +34,7 @@ namespace ScheduleAppointment
 
             var confirmationCode = this.GetConfirmationCode();
 
-            AppointmentDao dao = new AppointmentDao();
+            
             Appointment appt = new Appointment()
             {
                 ConfirmationCode = confirmationCode,
@@ -32,7 +46,7 @@ namespace ScheduleAppointment
                 CreateTime = this.Now,
                 CreateUser = this.CurrentUserName
             };
-            dao.InsertAppointment(appt);
+            _appointmentDao.InsertAppointment(appt);
 
             return appt;
         }

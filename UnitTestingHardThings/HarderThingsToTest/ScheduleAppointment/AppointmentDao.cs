@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ScheduleAppointment
 {
-    public class AppointmentDao
+    public class AppointmentDao : IAppointmentDao
     {
 
 
@@ -16,5 +16,24 @@ namespace ScheduleAppointment
             appt.AppointmentId = appointmentNumber++;
         }
 
+        public Appointment LoadAppointment(int appointmentId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Appointment> LoadAppointments()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Appointment> LoadAppointmentsForDay(DateTime date)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateAppointment(Appointment appt)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

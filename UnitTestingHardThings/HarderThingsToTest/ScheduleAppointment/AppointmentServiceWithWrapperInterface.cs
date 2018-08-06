@@ -7,17 +7,19 @@ namespace ScheduleAppointment
     public class AppointmentServiceWithWrapperInterface : BaseService
     {
 
-        public AppointmentServiceWithWrapperInterface(IDateTimeProvider dateTimeProvider, 
-            IConfigProvider configProvider, IUserProvider userProvider, IConfirmationCodeProvider confirmCodeProvider)
+        public AppointmentServiceWithWrapperInterface(IAppointmentDao dao, IDateTimeProvider dateTimeProvider, 
+            IConfigProvider configProvider, IUserProvider userProvider, IConfirmationCodeProvider confirmationCodeProvider)
         {
+            this._appointmentDao = dao;
             this._dateTimeProvider = dateTimeProvider;
             this._configProvider = configProvider;
             this._userProvider = userProvider;
-            this._confirmCodeProvider = confirmCodeProvider;
+            this._confirmCodeProvider = confirmationCodeProvider;
         }
 
         public AppointmentServiceWithWrapperInterface()
         {
+            this._appointmentDao = new AppointmentDao();
             this._dateTimeProvider = new DefaultDateTimeProvider();
             this._configProvider = new DefaultConfigProvider();
             this._userProvider = new DefaultUserProvider();
@@ -25,12 +27,11 @@ namespace ScheduleAppointment
         }
 
 
-
+        private IAppointmentDao _appointmentDao;
         private IDateTimeProvider _dateTimeProvider;
         private IConfigProvider _configProvider;
         private IUserProvider _userProvider;
         private IConfirmationCodeProvider _confirmCodeProvider;
-
 
         public Appointment CreateAppointment(AppointmentRequest request)
         {
@@ -42,9 +43,8 @@ namespace ScheduleAppointment
                 throw new Exception($"Cannot make an appointment more than {maxDays} in the future");
 
 
-            var confirmationCode = _confirmCodeProvider.NewConfirmationCode();
+            var confirmationCode = this._confirmCodeProvider.NewConfirmationCode();
 
-            AppointmentDao dao = new AppointmentDao();
             Appointment appt = new Appointment()
             {
                 ConfirmationCode = confirmationCode,
@@ -56,9 +56,16 @@ namespace ScheduleAppointment
                 CreateTime = _dateTimeProvider.Now,
                 CreateUser = _userProvider.CurrentUsername
             };
-            dao.InsertAppointment(appt);
+            _appointmentDao.InsertAppointment(appt);
 
             return appt;
+        }
+
+
+
+        public virtual String GetConfirmationCode()
+        {
+            return ConfirmationCodeGenerator.NewConfirmationCode();
         }
 
     }

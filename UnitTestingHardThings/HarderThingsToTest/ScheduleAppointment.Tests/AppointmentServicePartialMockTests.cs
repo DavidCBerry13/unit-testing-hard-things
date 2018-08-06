@@ -25,7 +25,8 @@ namespace ScheduleAppointment.Tests
             };
 
             // Arrange
-            var mock = new Mock<AppointmentServicePartialMock>();
+            var mockDao = new Mock<IAppointmentDao>();
+            var mock = new Mock<AppointmentServicePartialMock>(mockDao.Object);
             mock.Setup(m => m.Today).Returns(today);
             mock.Setup(m => m.Now).Returns(now);
             mock.Setup(m => m.MaxAppointmentDays).Returns(maxAppointmentDays);
@@ -50,7 +51,8 @@ namespace ScheduleAppointment.Tests
             };
 
             // Arrange
-            var mock = new Mock<AppointmentServicePartialMock>();
+            var mockDao = new Mock<IAppointmentDao>();
+            var mock = new Mock<AppointmentServicePartialMock>(mockDao.Object);
             mock.Setup(m => m.Today).Returns(today);
             mock.Setup(m => m.Now).Returns(now);
             mock.Setup(m => m.MaxAppointmentDays).Returns(maxAppointmentDays);
@@ -61,6 +63,8 @@ namespace ScheduleAppointment.Tests
         }
 
 
+        // This test fails on purpose because the thread principal does not get populated in a unit test
+        // To override sealed method, we can use new keyword or inject a provider
         [Fact]
         public void WhenAppointmentDateOnMaxDate_AppointmentShouldBeCreatedForThatDate()
         {
@@ -75,7 +79,8 @@ namespace ScheduleAppointment.Tests
             };
 
             // Arrange
-            var mock = new Mock<AppointmentServicePartialMock>();
+            var mockDao = new Mock<IAppointmentDao>();
+            var mock = new Mock<AppointmentServicePartialMock>(mockDao.Object);
             mock.Setup(m => m.Today).Returns(today);
             mock.Setup(m => m.Now).Returns(now);
             mock.Setup(m => m.MaxAppointmentDays).Returns(maxAppointmentDays);

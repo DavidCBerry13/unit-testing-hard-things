@@ -24,6 +24,7 @@ namespace ScheduleAppointment.Tests
             };
 
             // Arrange
+            var daoMock = new Mock<IAppointmentDao>();
             var dateTimeMock = new Mock<IDateTimeProvider>();
             dateTimeMock.Setup(m => m.Today).Returns(today);
             dateTimeMock.Setup(m => m.Now).Returns(now);
@@ -36,8 +37,8 @@ namespace ScheduleAppointment.Tests
             userMock.Setup(m => m.CurrentUsername).Returns("SomeUser");
 
             // Act
-            var apptService = new AppointmentServiceWithWrapperInterface(dateTimeMock.Object,
-                configMock.Object, userMock.Object, confirmCodeMock.Object);
+            var apptService = new AppointmentServiceWithWrapperInterface(daoMock.Object, 
+                dateTimeMock.Object, configMock.Object, userMock.Object, confirmCodeMock.Object);
             var appt = apptService.CreateAppointment(request);
 
             // Assert

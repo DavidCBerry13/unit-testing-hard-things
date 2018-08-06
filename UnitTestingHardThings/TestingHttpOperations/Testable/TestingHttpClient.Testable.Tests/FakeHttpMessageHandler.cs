@@ -13,6 +13,12 @@ namespace TestingHttpClient.Testable.Tests
     public class FakeHttpMessageHandler : HttpMessageHandler
     {
 
+        /// <summary>
+        /// Creates an Http Message Handler that will short circuit the HTTP request pipeline
+        /// and return a message with the provided status code and HttpContent as the return message
+        /// </summary>
+        /// <param name="statusCode">The HTTP Status code of the generated response</param>
+        /// <param name="httpContent">The HttpContent to use as the return content</param>
         public FakeHttpMessageHandler(HttpStatusCode statusCode, HttpContent httpContent)
             : this(statusCode, httpContent, new Dictionary<String, String>())
         {
@@ -20,6 +26,14 @@ namespace TestingHttpClient.Testable.Tests
         }
 
 
+        /// <summary>
+        /// Creates an Http Message Handler that will short circuit the HTTP request pipeline
+        /// and return a message with the provided status code, HttpContent as the return message
+        /// and response headers
+        /// </summary>
+        /// <param name="statusCode">The HTTP Status code of the generated response</param>
+        /// <param name="httpContent">The HttpContent to use as the return content</param>
+        /// <param name="headers">An IDictionary of key/values to use as HTTP headers on the generated response</param>
         public FakeHttpMessageHandler(HttpStatusCode statusCode, HttpContent httpContent, IDictionary<String, String> headers)
         {
             this._statusCode = statusCode;
