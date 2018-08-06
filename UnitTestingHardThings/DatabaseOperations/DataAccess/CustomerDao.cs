@@ -36,7 +36,7 @@ namespace DataAccess
                                 CustomerId = dr.GetInt32(0),
                                 FirstName = dr.GetString(1),
                                 LastName = dr.GetString(2),
-                                Email = dr.GetString(3)
+                                Email = dr.IsDBNull(3) ? null : dr.GetString(3)
                             };
 
                             customers.Add(c);

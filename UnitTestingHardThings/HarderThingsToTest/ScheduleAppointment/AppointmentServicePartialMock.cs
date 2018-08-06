@@ -25,11 +25,11 @@ namespace ScheduleAppointment
         public Appointment CreateAppointment(AppointmentRequest request)
         {
             if (request.AppointmentDate.Date <= this.Today)
-                throw new Exception("Cannot make an appointment before today");
+                throw new ArgumentException("Cannot make an appointment before today");
 
             int maxDays = this.MaxAppointmentDays;
             if (request.AppointmentDate.Date > this.Today.AddDays(maxDays))
-                throw new Exception($"Cannot make an appointment more than {maxDays} in the future");
+                throw new ArgumentException($"Cannot make an appointment more than {maxDays} in the future");
 
 
             var confirmationCode = this.GetConfirmationCode();
@@ -63,11 +63,13 @@ namespace ScheduleAppointment
             get { return DateTime.Now; }
         }
 
-
-        //public virtual String CurrentUserName
-        //{
-        //    get { return base.CurrentUserName; }
-        //}
+        // New keyword is used because this is a sealed memeber
+        // This is an unsavory choice and in real life one would probably inject an
+        // interface that wraps the call rather than using a partial mock
+        public new virtual String CurrentUserName
+        {
+            get { return base.CurrentUserName; }
+        }
 
 
         public virtual int MaxAppointmentDays

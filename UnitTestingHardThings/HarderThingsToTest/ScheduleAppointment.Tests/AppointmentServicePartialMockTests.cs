@@ -33,7 +33,7 @@ namespace ScheduleAppointment.Tests
             mock.Setup(m => m.GetConfirmationCode()).Returns("ABCDEFG");
 
             // Act and Assert
-            Assert.Throws<Exception>(() => mock.Object.CreateAppointment(request));
+            Assert.Throws<ArgumentException>(() => mock.Object.CreateAppointment(request));
         }
 
 
@@ -59,12 +59,10 @@ namespace ScheduleAppointment.Tests
             mock.Setup(m => m.GetConfirmationCode()).Returns("ABCDEFG");
 
             // Act and Assert
-            Assert.Throws<Exception>(() => mock.Object.CreateAppointment(request));
+            Assert.Throws<ArgumentException>(() => mock.Object.CreateAppointment(request));
         }
 
 
-        // This test fails on purpose because the thread principal does not get populated in a unit test
-        // To override sealed method, we can use new keyword or inject a provider
         [Fact]
         public void WhenAppointmentDateOnMaxDate_AppointmentShouldBeCreatedForThatDate()
         {
